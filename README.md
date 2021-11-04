@@ -64,10 +64,13 @@ it will display something like
 
 ```
 Over the last 18 months, the following ciris have a larger "INFORM Severity Index" at the last update with respect to the first entry in the database
-id	date begin	date end	duration	index begin	index end	index diff	index min	index max	index diff	duration
-AFG001 	 2020-04-29 	 2021-09-15 	 504 		 4.5 		 4.7 		 0.20 		 4.7 		 4.5 		 0.20 		 427
-BDI001 	 2020-04-28 	 2021-06-09 	 407 		 3.3 		 3.8 		 0.50 		 3.9 		 3.2 		 0.70 		 377
-BFA002 	 2020-03-22 	 2021-06-30 	 465 		 3.4 		 3.9 		 0.50 		 4.1 		 3.4 		 0.70 		 465
-BGD002 	 2020-04-29 	 2021-10-20 	 539 		 3.1 		 3.2 		 0.10 		 3.3 		 3.1 		 0.20 		 37
-BRA002 	 2020-04-29 	 2021-06-11 	 408 		 2.2 		 2.5 		 0.30 		 2.6 		 2.2 		 0.40 		 408
+id	date begin	date end	duration	isi begin	isi end		isi diff
+AFG001 	 2020-04-29 	 2021-09-15 	 504 		 4.5 		 4.7 		 0.20
+BDI001 	 2020-04-28 	 2021-06-09 	 407 		 3.3 		 3.8 		 0.50
+BFA002 	 2020-03-22 	 2021-06-30 	 465 		 3.4 		 3.9 		 0.50
+BGD002 	 2020-04-29 	 2021-10-20 	 539 		 3.1 		 3.2 		 0.10
+BRA002 	 2020-04-29 	 2021-06-11 	 408 		 2.2 		 2.5 		 0.30
+CAF001 	 2020-03-30 	 2021-09-28 	 547 		 4.0 		 4.3 		 0.30
 ```
+
+
