@@ -42,3 +42,14 @@ How to run the code
 ============
 Get the data
 -
+First we collect the data locally for the 18 last months when possible (the last request will take some time)
+```
+python get_acapsdata.py --type isi --nmonths 18
+python get_acapsdata.py --type ha --nmonths 18
+python get_acapsdata.py --type isi_log
+
+```
+Now that we have the data locally, we can proceed with analysing them.
+
+Question 1
+-
