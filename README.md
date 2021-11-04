@@ -11,7 +11,9 @@ Table of contents
   * [Setup](#setup)
   * [How to run the code](#how-to-run-the-code)
     * [Get the data](#get-the-data)
- 
+    * [Question 1](#question-1)
+    * [Question 2](#question-2)
+    * [Question 3](#question-3)
 
 Questions
 -
