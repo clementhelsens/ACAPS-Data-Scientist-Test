@@ -7,18 +7,21 @@ Table of contents
 =================
   * [ACAPS Data Scientist Test](#ACAPS-Data-Scientist-Test)
   * [Table of contents](#table-of-contents)
+  * [Questions](#questions)
   * [RootDataFrame based](#rootdataframe-based)
     * [Getting Started](#getting-started)
-    * [Generalities](#generalities)
-    * [Pre selection](#pre-selection)
-    * [Final selection](#final-selection)
-    * [Plotting](#plotting)
+ 
 
+Questions
+-
+1. Which crises show a deterioration in severity, as measured by the INFORM Severity Index, during the last 18 months?
+Use the /api/v1/inform-severity-index/{date}/ endpoint of ACAPS API, where {date} is in the format MMMYYYY, e.g., Nov2021. The "INFORM Severity Index" field gives the overall score.
+2.
+3.
 
 RootDataFrame based
 =============
-Using ROOT dataframe allows a much quicker processing time as it natively supports multithreading. In this implementation, everything from reading EDM4Hep or FCCSW EDM files on eos and producing flat n-tuples, to running a final selection and plotting the results will be explained. ROOT dataframe documentation is availabe [here](https://root.cern/doc/master/classROOT_1_1RDataFrame.html)
-
+Using 
 Getting Started
 ============
-In order to use ROOT dataframe for the analyses, the dictionary with the analyzers needs to be built and put into  `LD_LIBRARY_PATH` (this happens in `setup.sh`)
+In order t
