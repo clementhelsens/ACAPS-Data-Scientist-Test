@@ -16,7 +16,7 @@ Table of contents
 Questions
 -
 Below are the questions asked 
-1. Which crises show a deterioration in severity, as measured by theINFORM Severity Index, during the last 18 months?
+1. Which crises show a deterioration in severity, as measured by theINFORM Severity Index, during the last 18 months?  
    *Use the /api/v1/inform-severity-index/{date}/ endpoint of ACAPS API, where {date} is in the format MMMYYYY, e.g., Nov2021. The "INFORM Severity Index" field gives the overall score.*
 2. Explore the indicators of the INFORM Severity Index model. Are
    there indicators which show a particularly strong increase or
