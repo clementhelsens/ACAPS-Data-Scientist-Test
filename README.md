@@ -21,9 +21,9 @@ Below are the questions asked
 2. Explore the indicators of the INFORM Severity Index model. Are
    there indicators which show a particularly strong increase or
    decrease, or an interesting change, over the last 18 months? Pick
-   out some interesting features for some crises.
+   out some interesting features for some crises.  
 *Use the /api/v1/inform-severity-index/log/ endpoint of ACAPS API.*
-3. Is there a correlation between the severity of a crisis, as measured by the INFORM Severity Index, and the humanitarian access score?
+3. Is there a correlation between the severity of a crisis, as measured by the INFORM Severity Index, and the humanitarian access score?  
 *Use the /api/v1/humanitarian-access/{date}/ endpoint to access the humanitarian access scores.*
 
 Setup
