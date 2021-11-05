@@ -63,7 +63,7 @@ python question1.py isi_18months.json
 it will display something like
 
 ```
-Over the last 18 months, the following ciris have a larger "INFORM Severity Index" at the last update with respect to the first entry in the database
+Over the last 18 months, the following crises have a larger "INFORM Severity Index" at the last update with respect to the first entry in the database
 id	date begin	date end	duration	isi begin	isi end		isi diff
 AFG001 	 2020-04-29 	 2021-09-15 	 504 		 4.5 		 4.7 		 0.20
 BDI001 	 2020-04-28 	 2021-06-09 	 407 		 3.3 		 3.8 		 0.50
@@ -76,7 +76,7 @@ CAF001 	 2020-03-30 	 2021-09-28 	 547 		 4.0 		 4.3 		 0.30
 and 
 
 ```
-Over the last 18 months, the following ciris have an "INFORM Severity Index" that has increased wrt a previous minimum, and thus shows a larger increase with respect to first - last entry
+Over the last 18 months, the following crises have an "INFORM Severity Index" that has increased wrt a previous minimum, and thus shows a larger increase with respect to first - last entry
 id	date min	date max	duration	isi min		isi max		isi diff
 BDI001 	 2020-05-28 	 2021-06-09 	 377 		 3.2 		 3.9 		 0.70
 BFA002 	 2020-03-22 	 2021-06-30 	 465 		 3.4 		 4.1 		 0.70
