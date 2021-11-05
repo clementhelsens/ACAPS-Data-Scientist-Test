@@ -44,20 +44,28 @@ How to run the code
 ============
 Get the data
 -
-First we collect the data locally for the 18 last months when possible (the last request will take some time)
+First we collect the data locally for the 18 last months when possible and we produce merged files, where the ```results``` field are merged.
+
+```
+python get_acapsdata.py --type isi --nmonths 18 --merge
+python get_acapsdata.py --type ha --nmonths 18 --merge
+python get_acapsdata.py --type isi_log --merge
+```
+
+Then for the inform severity index and the humanitarian access we produce one file per month.
+
 ```
 python get_acapsdata.py --type isi --nmonths 18
 python get_acapsdata.py --type ha --nmonths 18
-python get_acapsdata.py --type isi_log
-
 ```
+
 Now that we have the data locally, we can proceed with analysing them.
 
 Question 1
 -
-To run the code for the first question, just do
+To run the first approach for the first question, just do
 ```
-python question1.py isi_18months.json 
+python question1_1.py data/isi_18months.json 
 ```
 
 it will display something like
@@ -84,4 +92,9 @@ BGD002 	 2020-04-29 	 2020-06-05 	 37 		 3.1 		 3.3 		 0.20
 BRA002 	 2020-04-29 	 2021-06-11 	 408 		 2.2 		 2.6 		 0.40
 CMR001 	 2020-05-28 	 2021-06-07 	 375 		 3.5 		 4.2 		 0.70
 CMR002 	 2020-08-26 	 2021-10-26 	 426 		 3.1 		 3.7 		 0.60
+```
+
+To run the second approach for the first question, just do
+```
+python question1_2.py data/isi_*.json 
 ```
