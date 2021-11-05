@@ -48,7 +48,6 @@ First we collect the data locally for the 18 last months when possible and we pr
 
 ```
 python get_acapsdata.py --type isi --nmonths 18 --merge
-python get_acapsdata.py --type ha --nmonths 18 --merge
 python get_acapsdata.py --type isi_log --merge
 ```
 
