@@ -42,7 +42,7 @@ pip install matplotlib
 
 How to run the code
 ============
-Get the data
+Retrieve the data
 -
 First we collect the data locally for the 18 last months when possible and we produce merged files, where the ```results``` field are merged.
 
