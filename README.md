@@ -10,7 +10,7 @@ Table of contents
   * [Questions](#questions)
   * [Setup](#setup)
   * [How to run the code](#how-to-run-the-code)
-    * [Get the data](#get-the-data)
+    * [Retrieve the data](#retrieve-the-data)
     * [Question 1](#question-1)
     * [Question 2](#question-2)
     * [Question 3](#question-3)
