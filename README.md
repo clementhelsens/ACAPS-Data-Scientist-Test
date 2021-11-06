@@ -47,7 +47,6 @@ Retrieve the data
 First we collect the data locally for the 18 last months when possible and we produce merged files, where the ```results``` field are merged.
 
 ```
-python get_acapsdata.py --type isi --nmonths 18 --merge
 python get_acapsdata.py --type isi_log --merge
 ```
 
@@ -62,9 +61,10 @@ Now that we have the data locally, we can proceed with analysing them.
 
 Question 1
 -
-To run the first approach for the first question, just do
+To run the code for the first question, just do
+
 ```
-python question1_1.py data/isi_18months.json 
+python question1.py data/isi_*.json"
 ```
 
 it will display something like
