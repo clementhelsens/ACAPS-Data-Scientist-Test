@@ -20,15 +20,21 @@ def run(fname, latex):
 
     #create sub dataframe
     sub_df = df[['Last updated','crisis_id','INFORM Severity Index']]
-    print('---- size original\t',len(sub_df))
+    print('---- data set size original\t\t',len(sub_df))
+    crisis_list_test = sorted(list(set([c for c in sub_df['crisis_id']])))
+    print('---- number of crisis original\t\t',len(crisis_list_test))
 
     #filter when INFORM Severity Index is Null
-    sub_df = sub_df.dropna(thresh=3)
-    print('---- size filter null\t',len(sub_df))
+    sub_df = sub_df.dropna()
+    print('---- data set size filter null\t\t',len(sub_df))
+    crisis_list_test = sorted(list(set([c for c in sub_df['crisis_id']])))
+    print('---- number of crisis filter null\t',len(crisis_list_test))
 
     #filter when we have at least two entries for a given crisis
     sub_df=sub_df.groupby("crisis_id").filter(lambda x: len(x) > 1)
-    print('---- size filter >1\t',len(sub_df))
+    print('---- data set size filter >1\t\t',len(sub_df))
+    crisis_list_test = sorted(list(set([c for c in sub_df['crisis_id']])))
+    print('---- number of crisis filter >1\t\t',len(crisis_list_test))
 
     #count the number of occurence of each crisis
     #crisis_count = sub_df['crisis_id'].value_counts()
@@ -37,25 +43,18 @@ def run(fname, latex):
     #sort by crisis_id and date
     sub_df = sub_df.sort_values(["crisis_id", "Last updated"], ascending = (True, True))
     
-    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-        print (sub_df)
-
+    #with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+    #    print (sub_df)
 
     #get the list of crisis
-    crisis_list=[]
-    for c in data['results']:
-        if c['crisis_id'] not in crisis_list: crisis_list.append(c['crisis_id'])
-        #if c['crisis_id']=='AFG001':
-        #    print (c)
-        #    print('')
-
-
+    crisis_list = sorted(list(set([c for c in sub_df['crisis_id']])))
     #get head, tail, min and max values and corresponding date of each crisis
     print ('Over the last 18 months, the following crises have a larger "INFORM Severity Index" at the last update with respect to the first entry in the database')
-    print ('id\tdate begin\tdate end\tduration\tisi begin\tisi end\t\tisi diff')
+    print ('number\tid\tdate begin\tdate end\tduration\tisi begin\tisi end\t\tisi diff')
+    counter=0
     for c in crisis_list:
         sub_df_crisis =  sub_df[sub_df['crisis_id'].isin([c])]
-        #continue if df is empty
+        #continue if df is empty (should not be the case...)
         if sub_df_crisis.empty:continue
 
         isi_head = sub_df_crisis.head(1)['INFORM Severity Index'].values[0]
@@ -66,13 +65,15 @@ def run(fname, latex):
 
         if isi_tail>isi_head:
             if latex:
-                print (c,'&',date_head,'&',date_tail,'&',days_between(date_head,date_tail),'&',isi_head,'&',isi_tail,'&',"{:.2f}".format(isi_tail-isi_head),'\\\\')
+                print (counter,'&',c,'&',date_head,'&',date_tail,'&',days_between(date_head,date_tail),'&',isi_head,'&',isi_tail,'&',"{:.2f}".format(isi_tail-isi_head),'\\\\')
             else:
-                print (c,'\t',date_head,'\t',date_tail,'\t',days_between(date_head,date_tail),'\t\t',isi_head,'\t\t',isi_tail,'\t\t',"{:.2f}".format(isi_tail-isi_head))
+                print (counter,'\t',c,'\t',date_head,'\t',date_tail,'\t',days_between(date_head,date_tail),'\t\t',isi_head,'\t\t',isi_tail,'\t\t',"{:.2f}".format(isi_tail-isi_head))
+            counter+=1
 
+    counter=0
     print ('')
     print ('Over the last 18 months, the following crises have an "INFORM Severity Index" that has increased wrt a previous minimum, and thus shows a larger increase with respect to first - last entry')
-    print ('id\tdate min\tdate max\tduration\tisi min\t\tisi max\t\tisi diff')
+    print ('number\tid\tdate min\tdate max\tduration\tisi min\t\tisi max\t\tisi diff')
     for c in crisis_list:
         sub_df_crisis =  sub_df[sub_df['crisis_id'].isin([c])]
         #continue if df is empty
@@ -89,11 +90,11 @@ def run(fname, latex):
 
         if (max_isi_date>min_isi_date and days_between(max_isi_date,min_isi_date)>0) and (max_isi-min_isi)>(isi_tail-isi_head):
             if latex:
-                print (c,'&',min_isi_date,'&',max_isi_date,'&',days_between(max_isi_date,min_isi_date),'&',min_isi,'&',max_isi,'&',"{:.2f}".format(max_isi-min_isi),'\\\\')
+                print (counter,'&',c,'&',min_isi_date,'&',max_isi_date,'&',days_between(max_isi_date,min_isi_date),'&',min_isi,'&',max_isi,'&',"{:.2f}".format(max_isi-min_isi),'\\\\')
             else:
-                print (c,'\t',min_isi_date,'\t',max_isi_date,'\t',days_between(max_isi_date,min_isi_date),'\t\t',min_isi,'\t\t',max_isi,'\t\t',"{:.2f}".format(max_isi-min_isi))
+                print (counter,'\t',c,'\t',min_isi_date,'\t',max_isi_date,'\t',days_between(max_isi_date,min_isi_date),'\t\t',min_isi,'\t\t',max_isi,'\t\t',"{:.2f}".format(max_isi-min_isi))
 
-
+            counter+=1
                           
     # Closing file
     f.close()
@@ -126,35 +127,5 @@ if __name__ == "__main__":
 
 
     
-
-    
-#with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-#    print (sub_df)
-
-#df_test =
-#print ('=============df test')
-#print (df_test)
-#print ('=============df test')
-#print (df_test.head(1)['INFORM Severity Index'].values)
-#print (df_test.tail(1)['INFORM Severity Index'].values)
-#sub_df = sub_df.sort_values(by="crisis_id")
-#print (sub_df)
-#get the last valid INFORM Severity Index for all crisis_id
-#for i in crisis_id: print('------',sub_df[i])
-
-#print ("---------------------",type(data["results"]))
-#print ("---------------------",len(data["results"]))
-#print ("---------------------",len(data["results"][0]))
-#print ("c id  ",len(crisis_id))
-#sys.exit(3)
-#get the last valid INFORM Severity Index for all crisis_id
-
-
-#stuff to remove
-#print (df.shape)
-#print (df.head)
-#print (df.columns)
-#print (len(df))
-#print (df[['crisis_id','INFORM Severity Index','Last updated']])
 
 
