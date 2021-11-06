@@ -64,7 +64,7 @@ Question 1
 To run the code for the first question, just do
 
 ```
-python question1.py data/isi_*.json"
+python question1.py "data/isi_*.json"
 ```
 
 it will display something like
