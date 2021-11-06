@@ -91,3 +91,28 @@ over the full period the number of crises out of 152 that have: increase=102   d
 within each time period 131 crises out of 152 have suffered from an increase of the index
 
 ```
+
+Question 1
+-
+To run the code for the third question, just do
+
+```
+python  question3.py  "data/isi_*.json" "data/ha_*.json"
+```
+it will display something like
+
+```
+============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" using all the crises and all the data:  0.6723865337297351
+============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  AFG001   0.8528028654224437
+============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ARM002
+============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BDI001   -0.4195465528466834
+============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BFA002
+============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BFA003
+============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BFA004
+...
+...
+...
+============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ZWE001   -0.8770580193070295
+============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ZWE003
+unable to calculate correlations for 59 out of 156 crises, list: ['ARM002', 'BFA002', 'BFA003', 'BFA004', 'CAF002', 'CHN002', 'CHN003', 'COD002', 'COG002', 'COG004', 'COL001', 'COL002', 'COL003', 'DJI001', 'DJI002', 'DJI003', 'DJI004', 'ECU002', 'ERI001', 'ESP002', 'ETH004', 'FJI002', 'GTM003', 'HND002', 'HTI002', 'IDN006', 'IDN007', 'IND004', 'ITA002', 'LBN004', 'LSO002', 'MDG004', 'MDG005', 'MEX004', 'MMR004', 'MOZ007', 'NER005', 'NIC002', 'PAK001', 'PHL004', 'PHL009', 'PRK001', 'REG006', 'SDN007', 'SLV001', 'SSD001', 'SWZ001', 'TCD001', 'TCD003', 'TCD004', 'TCD005', 'TLS002', 'TTO002', 'TZA002', 'UGA001', 'UKR002', 'VNM002', 'VUT002', 'ZWE003']
+```
