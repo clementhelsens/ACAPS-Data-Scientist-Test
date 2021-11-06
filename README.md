@@ -92,7 +92,7 @@ within each time period 131 crises out of 152 have suffered from an increase of 
 
 ```
 
-Question 1
+Question 3
 -
 To run the code for the third question, just do
 
