@@ -1,7 +1,7 @@
 ACAPS Data Scientist Test
 =============
 
-This repository contains the code I used to reply to ACAPS data scientist question November 04-08 2021
+This repository contains the code I used to reply to ACAPS data scientist questions recieved November 04-08 2021
 
 Table of contents
 =================
@@ -48,7 +48,6 @@ Retrieve the data
 First we collect the data locally for the 18 last months when possible and we produce merged files, where the ```results``` field are merged.
 
 ```
-python get_acapsdata.py --type isi --nmonths 18 --merge
 python get_acapsdata.py --type isi_log --merge
 ```
 
@@ -63,38 +62,58 @@ Now that we have the data locally, we can proceed with analysing them.
 
 Question 1
 -
-To run the first approach for the first question, just do
+To run the code for the first question, just do
+
 ```
-python question1_1.py data/isi_18months.json 
+python question1.py "data/isi_*.json"
 ```
 
 it will display something like
 
 ```
+---- data set size original		 2593
+---- number of crisis original		 176
+---- data set size filter null		 2226
+---- number of crisis filter null	 156
+---- data set size filter >1		 2222
+---- number of crisis filter >1		 152
 Over the last 18 months, the following crises have a larger "INFORM Severity Index" at the last update with respect to the first entry in the database
-id	date begin	date end	duration	isi begin	isi end		isi diff
-AFG001 	 2020-04-29 	 2021-09-15 	 504 		 4.5 		 4.7 		 0.20
-BDI001 	 2020-04-28 	 2021-06-09 	 407 		 3.3 		 3.8 		 0.50
-BFA002 	 2020-03-22 	 2021-06-30 	 465 		 3.4 		 3.9 		 0.50
-BGD002 	 2020-04-29 	 2021-10-20 	 539 		 3.1 		 3.2 		 0.10
-BRA002 	 2020-04-29 	 2021-06-11 	 408 		 2.2 		 2.5 		 0.30
-CAF001 	 2020-03-30 	 2021-09-28 	 547 		 4.0 		 4.3 		 0.30
+number	id		var(last-first)	max increase	max decrease
+1 	 AFG001 	 0.20 		 0.20 		 0.00
+2 	 ARM002 	 0.00 		 0.10 		 -0.10
+...
+...
+151 	 ZWE001 	 -0.20 		 0.00 		 -0.20
+152 	 ZWE003 	 0.00 		 0.00 		 0.00
+over the full period the number of crises out of 152 that have: increase=102   decrease=25   stable=25
+within each time period 131 crises out of 152 have suffered from an increase of the index
+
 ```
 
-and 
+Question 2
+-
+To run the code for the second question, just do
+```
+python question2.py data/isi_log.json 
+```
+It will take few minutes to run as it will explore all the indicators and all the crises for all the time slice (month granularity). It does not print outputs in the terminal.
+
+Question 3
+-
+To run the code for the third question, just do
 
 ```
-Over the last 18 months, the following crises have an "INFORM Severity Index" that has increased wrt a previous minimum, and thus shows a larger increase with respect to first - last entry
-id	date min	date max	duration	isi min		isi max		isi diff
-BDI001 	 2020-05-28 	 2021-06-09 	 377 		 3.2 		 3.9 		 0.70
-BFA002 	 2020-03-22 	 2021-06-30 	 465 		 3.4 		 4.1 		 0.70
-BGD002 	 2020-04-29 	 2020-06-05 	 37 		 3.1 		 3.3 		 0.20
-BRA002 	 2020-04-29 	 2021-06-11 	 408 		 2.2 		 2.6 		 0.40
-CMR001 	 2020-05-28 	 2021-06-07 	 375 		 3.5 		 4.2 		 0.70
-CMR002 	 2020-08-26 	 2021-10-26 	 426 		 3.1 		 3.7 		 0.60
+python  question3.py  "data/isi_*.json" "data/ha_*.json"
 ```
+it will display something like
 
-To run the second approach for the first question, just do
 ```
-python question1_2.py data/isi_*.json 
+============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" using all the crises and all the data:  0.6723865337297351
+============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  AFG001   0.8528028654224437
+============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ARM002
+...
+...
+============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ZWE001   -0.8770580193070295
+============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ZWE003
+unable to calculate correlations for 59 out of 156 crises, list: ['ARM002', 'BFA002', 'BFA003', 'BFA004', 'CAF002', 'CHN002', 'CHN003', 'COD002', 'COG002', 'COG004', 'COL001', 'COL002', 'COL003', 'DJI001', 'DJI002', 'DJI003', 'DJI004', 'ECU002', 'ERI001', 'ESP002', 'ETH004', 'FJI002', 'GTM003', 'HND002', 'HTI002', 'IDN006', 'IDN007', 'IND004', 'ITA002', 'LBN004', 'LSO002', 'MDG004', 'MDG005', 'MEX004', 'MMR004', 'MOZ007', 'NER005', 'NIC002', 'PAK001', 'PHL004', 'PHL009', 'PRK001', 'REG006', 'SDN007', 'SLV001', 'SSD001', 'SWZ001', 'TCD001', 'TCD003', 'TCD004', 'TCD005', 'TLS002', 'TTO002', 'TZA002', 'UGA001', 'UKR002', 'VNM002', 'VUT002', 'ZWE003']
 ```
