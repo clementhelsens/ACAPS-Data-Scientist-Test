@@ -1,7 +1,7 @@
 ACAPS Data Scientist Test
 =============
 
-This repository contains the code I used to reply to ACAPS data scientist question November 04-08 2021
+This repository contains the code I used to reply to ACAPS data scientist questions recieved November 04-08 2021
 
 Table of contents
 =================
