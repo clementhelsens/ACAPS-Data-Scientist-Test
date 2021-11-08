@@ -1,3 +1,6 @@
+__author__ = "Clement Helsens"
+__email__ = "clement.helsens@gmail.com"
+
 import json
 import pandas as pd
 import sys
@@ -43,7 +46,7 @@ def build(files,name):
 
 
 #__________________________________________________________
-def run(output1,output2,name):   
+def run(output1,output2,dir,name):   
     #build the data as results:{date,crisis_id,INFORM Severity Index,ACCESS}, with date being the first day of the month
     merged_df=pd.merge(output1,output2, how='inner')
 
@@ -67,24 +70,49 @@ def run(output1,output2,name):
     corr = np.corrcoef(isi_1d,ha_1d)
 
     #make a scatter plot
-    scatterplot(isi_1d,ha_1d,name,corr[0,1])
+    scatterplot(isi_1d,ha_1d,dir,name,corr[0,1])
     
     return corr
 
 #__________________________________________________________
-def scatterplot(var1,var2,name,value):
+def scatterplot(var1,var2,dir,name,value):
     nameplot=name
+    #check if full stat
     if '2020' in name or '2021' in name: name='fullstat-'+name
+    
+    #build new var to take into account the same data points (to increase the marker size)
+    var1_merge=[var1[0]]
+    var2_merge=[var2[0]]
+    size=[1]
+    for i in range(1,len(var1)):
+        found=False
+        pos=-1
+        for j in range(len(var1_merge)):
+            if var1[i] == var1_merge[j] and var2[i] == var2_merge[j]:
+                found=True
+                pos=j
+        if found:
+            size[j]=size[j]+1
+        else:
+            var1_merge.append(var1[i])
+            var2_merge.append(var2[i])
+            size.append(1)
+    size=[s*10 for s in size]
+    
+    #do the scatter plot
     f=plt.figure()
     ax = f.add_subplot(111)
-    plt.plot(var1, var2, 'o', color='black')
+    plt.xlim([0, 6])
+    plt.ylim([-1, 6])
+    plt.scatter(var1_merge, var2_merge, s=size, alpha=0.5)
     plt.xlabel('INFORM Severity index')
     plt.ylabel('ACCESS humanitarian index')
-    plt.title('Scatter plot')
-    plt.text(0.1, 0.9,'correlation={:.4f}'.format(value),transform = ax.transAxes)
-    plt.text(0.1, 0.85,'crisis_id={}'.format(name),transform = ax.transAxes)
+    plt.text(0.01, 1.01,'correlation={:.4f}'.format(value),transform = ax.transAxes)
+    plt.text(0.01, 0.96,'crisis_id={}'.format(name),transform = ax.transAxes)
+    plt.text(0.01, 0.91,'number of crises={}'.format(len(var1)),transform = ax.transAxes)
     
-    plt.savefig('plots/scatter_{}.png'.format(nameplot))
+    plt.savefig('plots/{}/scatter_{}.png'.format(dir,nameplot))
+    plt.savefig('plots/{}/scatter_{}.pdf'.format(dir,nameplot))
     plt.close()
     
 #__________________________________________________________
@@ -108,7 +136,6 @@ if __name__ == "__main__":
         print ('no files found, exit')
         sys.exit(3)
 
-    
     #build the data as results:{date,crisis_id,INFORM Severity Index}, with date being the first day of the month
     output1=build(files1,"INFORM Severity Index")
 
@@ -116,10 +143,7 @@ if __name__ == "__main__":
     output2=build(files2,"ACCESS")
 
     #run the correlation
-    corr=run(output1,output2,'fullstat')
-
-    #make a scatter plot
-    #scatterplot(output1,output2,'fullstat')
+    corr=run(output1,output2,'question3/correlation_fullstat','fullstat')
     
     print('============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" using all the crises and all the data: ',corr[0,1])
 
@@ -137,7 +161,7 @@ if __name__ == "__main__":
         
         #run the correlation
         monthname=f_isi.replace('data/isi_','').replace('.json','')
-        corr=run(output1,output2,monthname)
+        corr=run(output1,output2,'question3/correlation_date',monthname)
         corr_months.append([monthname,corr[0,1]])
         
     #order the dates
@@ -150,13 +174,17 @@ if __name__ == "__main__":
                     corr_ordered.append(c[1])
                     month_ordered.append(c[0])
 
-    #plot the correlations versus time
-    plt.rcParams["figure.figsize"] = (17,10)
-    plt.figure()
-    plt.plot(month_ordered, corr_ordered, label='correlation')
-    plt.legend(loc="upper left")
-    plt.savefig('plots/correlation_vs_time.png')
-    plt.rcdefaults()
+    #plot the correlations versus time using all crises
+    f = plt.figure()
+    ax = f.add_subplot(111)
+    ax.set_ylim([0.2, 0.8])
+    plt.ylabel('Correlation coefficient')
+
+    plt.plot(month_ordered, corr_ordered, marker='o', ms=5, color='b')
+    plt.xticks(fontsize=8,rotation=45)
+    plt.grid(True, alpha=0.2,color='g')
+    plt.savefig('plots/question3/correlation_fullstat/correlation_vs_time.png')
+    plt.savefig('plots/question3/correlation_fullstat/correlation_vs_time.pdf')
     plt.close()
     
     #calculate the correlation for each crisis (could be done more elegantly if times allows)
@@ -169,7 +197,8 @@ if __name__ == "__main__":
     output2 = output2.dropna()
 
     #get the list of crisis of one dataset (as we want the same crisis to appear in both, it does not matter which one we choose)
-    crisis_list = sorted(list(set([c for c in output1['crisis_id']])))
+    #crisis_list = sorted(list(set([c for c in output1['crisis_id']])))
+    crisis_list = sorted(output1.crisis_id.unique().tolist())
 
     corr_crisis=[]
     nocorr=[]
@@ -178,7 +207,7 @@ if __name__ == "__main__":
         crisis_df2=output2[output2.crisis_id.isin([c])]
         
         #run the correlation
-        corr=run(crisis_df1,crisis_df2,c)
+        corr=run(crisis_df1,crisis_df2,'question3/correlation_crisis',c)
         if len(corr)==0:
             print('============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id ',c)
             nocorr.append(c)
@@ -187,12 +216,20 @@ if __name__ == "__main__":
         print('============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id ',c,' ',corr[0,1])
         corr_crisis.append(corr[0,1])
     print('unable to calculate correlations for {} out of {} crises, list: {}'.format(len(nocorr),len(crisis_list),nocorr))
+
+    #plot the distribution of correlation coefficient
     mean = np.mean(corr_crisis)
     std  = np.std(corr_crisis)
-    plt.figure()
-    plt.hist(corr_crisis, 50, density=True, facecolor='g', alpha=0.75)
-    plt.text(-0.75, 2.75, r'$\mu={:.3f},\ \sigma={:.3f}$'.format(mean,std))
-    plt.savefig('plots/correlation_crisis.png')
+    f = plt.figure()
+    ax = f.add_subplot(111)
+    ax.set_ylim([0., 20.])
+    plt.hist(corr_crisis, 25, facecolor='g', alpha=0.75)
+    plt.text(-0.75, 15., r'$\mu={:.3f},\ \sigma={:.3f}$'.format(mean,std))
+    plt.xlabel('Correlation coefficient')
+    plt.ylabel('Number of crises')
+
+    plt.savefig('plots/question3/correlation_fullstat/correlation_crisis.png')
+    plt.savefig('plots/question3/correlation_fullstat/correlation_crisis.pdf')
     plt.close()
     
         

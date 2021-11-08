@@ -3,12 +3,34 @@ import pandas as pd
 import sys
 from datetime import datetime
 import commons
+import matplotlib.pyplot as plt
 
 #__________________________________________________________
 def days_between(d1, d2):
     d1 = datetime.strptime(d1, "%Y-%m-%d")
     d2 = datetime.strptime(d2, "%Y-%m-%d")
     return abs((d2 - d1).days)
+
+#__________________________________________________________
+def maxincrease(x):
+    max=-9999
+    for i in range(0,len(x)-1):
+        for j in range(i+1,len(x)):
+            if x[j]-x[i]>max:max= x[j]-x[i]
+    return max
+#__________________________________________________________
+def plot(x,y,c):
+    #plot the correlations versus time
+    f = plt.figure()
+    ax = f.add_subplot(111)
+    plt.plot(x, y)
+    plt.ylabel('ACCESS humanitarian index')
+    plt.text(0.1, 0.9,'crisis_id={}'.format(c),transform = ax.transAxes)
+    plt.text(0.1, 0.85,'increase last-first={:.2f}'.format(y[-1]-y[0]),transform = ax.transAxes)
+    plt.text(0.1, 0.8,'max increase={:.2f}'.format(maxincrease(y)),transform = ax.transAxes)
+    plt.xticks(fontsize=8,rotation=45)
+    plt.savefig('plots/isi_{}.png'.format(c))
+    plt.close()
 
 #__________________________________________________________
 def run(sub_df, latex):
@@ -51,6 +73,14 @@ def run(sub_df, latex):
         sub_df_crisis =  sub_df[sub_df['crisis_id'].isin([c])]
         #continue if df is empty
         if sub_df_crisis.empty:continue
+
+        #plot index versus time
+        index = [c for c in sub_df_crisis['INFORM Severity Index']]
+        date  = [c[:7] for c in sub_df_crisis['date']]
+        for d in range(len(date)):
+            m=int(date[d].split('-')[-1])
+            date[d]=commons.monthcode[m-1]+date[d].split('-')[0]
+        plot(date,index,c)
 
         isi_head = sub_df_crisis.head(1)['INFORM Severity Index'].values[0]
         isi_tail = sub_df_crisis.tail(1)['INFORM Severity Index'].values[0]
