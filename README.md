@@ -80,17 +80,22 @@ Over the last 18 months, the following crises have a larger "INFORM Severity Ind
 number	id		var(last-first)	max increase	max decrease
 1 	 AFG001 	 0.20 		 0.20 		 0.00
 2 	 ARM002 	 0.00 		 0.10 		 -0.10
-3 	 BDI001 	 0.60 		 0.70 		 -0.10
 ...
 ...
-...
-150 	 ZMB002 	 0.20 		 0.20 		 -0.10
 151 	 ZWE001 	 -0.20 		 0.00 		 -0.20
 152 	 ZWE003 	 0.00 		 0.00 		 0.00
 over the full period the number of crises out of 152 that have: increase=102   decrease=25   stable=25
 within each time period 131 crises out of 152 have suffered from an increase of the index
 
 ```
+
+Question 2
+-
+To run the code for the second question, just do
+```
+python question2.py data/isi_log.json 
+```
+It will take few minutes to run as it will explore all the indicators and all the crises for all the time slice (month granularity). It does not print outputs in the terminal.
 
 Question 3
 -
@@ -105,11 +110,6 @@ it will display something like
 ============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" using all the crises and all the data:  0.6723865337297351
 ============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  AFG001   0.8528028654224437
 ============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ARM002
-============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BDI001   -0.4195465528466834
-============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BFA002
-============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BFA003
-============ can not calculate correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  BFA004
-...
 ...
 ...
 ============ correlation between "INFORM Severity Index" and "Humanitarian ACCESS" for crisis id  ZWE001   -0.8770580193070295
