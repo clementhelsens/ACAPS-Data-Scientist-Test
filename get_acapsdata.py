@@ -21,7 +21,7 @@ def savefile(output,outfilename):
 def get_token():
     # Post credentials to get an authentication token
     credentials = {
-        "username": "clement.helsens@cern.ch", # Replace with your email address
+        "username": "", # Replace with your email address
         "password": "" # Replace with your password
     }
 
