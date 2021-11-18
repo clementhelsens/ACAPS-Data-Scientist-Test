@@ -22,7 +22,7 @@ def get_token():
     # Post credentials to get an authentication token
     credentials = {
         "username": "clement.helsens@cern.ch", # Replace with your email address
-        "password": "cUbN73PsaPe3zMn" # Replace with your password
+        "password": "" # Replace with your password
     }
 
     auth_token_response = requests.post("https://api.acaps.org/api/v1/token-auth/", credentials)
