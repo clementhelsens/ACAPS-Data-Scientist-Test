@@ -1,8 +1,9 @@
 """
 Inspired from a simple working example of accessing ACAPS API in the Python programming language.
 """
+__author__ = "Clement Helsens"
+__email__ = "clement.helsens@gmail.com"
 
-import pandas as pd
 import requests
 from datetime import datetime
 import time
